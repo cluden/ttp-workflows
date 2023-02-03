@@ -1,0 +1,23 @@
+name: Repo Issues
+
+on:
+  [issues, workflow_dispatch]
+
+jobs:
+  show-event-object:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: output github.event.issue object
+        run: echo "$EVENT_CONTEXT"
+        env:
+          EVENT_CONTEXT: ${{ toJSON(github.event.issue) }}
+
+#  show-event-details:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: output issue details
+#        run: |
+#          echo "Issue title: ${{ github.event.issue.title }}
+#          echo "Issue body: ${{ github.event.issue.body }}"
