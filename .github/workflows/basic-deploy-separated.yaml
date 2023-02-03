@@ -1,11 +1,11 @@
-name: Separated Jobs (lint, build, test, deploy)
+name: Separated Jobs (lint, test, build, deploy)
 
 on:
   [push, workflow_dispatch]
 
 jobs:
-  lint:
 
+  pre-build-checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,27 +23,11 @@ jobs:
       - name: Run linter
         run: npm run lint
 
-  test:
-    needs: [lint]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code from our branch
-        uses: actions/checkout@v3
-
-      - name: Install NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm ci
-
       - name: Run tests
         run: npm run test
 
   build:
-    needs: [lint, test]
+    needs: [pre-build-checks]
     runs-on: ubuntu-latest
 
     steps:
