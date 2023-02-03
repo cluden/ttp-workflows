@@ -1,7 +1,7 @@
-name: Repo Issues
+name: Issues - info gathering
 
 on:
-  [issues, workflow_dispatch]
+  [issues]
 
 jobs:
 # NOTE: below is super useful for getting the entire issue event context
