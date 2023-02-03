@@ -4,6 +4,7 @@ on:
   [issues, workflow_dispatch]
 
 jobs:
+# NOTE: below is super useful for getting the entire issue event context
 #  show-event-object:
 #    runs-on: ubuntu-latest
 #
