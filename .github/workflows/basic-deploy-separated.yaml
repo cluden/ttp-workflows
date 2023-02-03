@@ -1,7 +1,7 @@
-name: Basic Deployment
+name: Separated Jobs (lint, build, test, deploy)
 
 on:
-  workflow_dispatch
+  [push, workflow_dispatch]
 
 jobs:
   lint:
@@ -23,8 +23,8 @@ jobs:
       - name: Run linter
         run: npm run lint
 
-
   test:
+    needs: [lint]
     runs-on: ubuntu-latest
 
     steps:
@@ -42,7 +42,8 @@ jobs:
       - name: Run tests
         run: npm run test
 
-  build-deploy:
+  build:
+    needs: [lint, test]
     runs-on: ubuntu-latest
 
     steps:
@@ -59,6 +60,22 @@ jobs:
 
       - name: Run build
         run: npm run build
+
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code from our branch
+        uses: actions/checkout@v3
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Deploy (pseudo) build
         run: echo "Code deployed!"
