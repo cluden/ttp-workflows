@@ -19,7 +19,6 @@ jobs:
     steps:
       - name: output issue details
         run: |
-          echo "Issue title: ${{ env.ISSUE_CONTEXT.title }}
-          echo "Issue body: ${{ env.ISSUE_CONTEXT.body }}"
-        env:
-          ISSUE_CONTEXT: ${{ github.event.issue }}
+          echo "Issue ID: ${{ github.event.issue.id }}
+          echo "Issue title: ${{ github.event.issue.title }}
+          echo "Issue body: ${{ github.event.issue.body }}"
